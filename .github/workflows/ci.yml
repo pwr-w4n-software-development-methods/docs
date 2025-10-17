@@ -1,0 +1,41 @@
+name: Compile Typst Documents
+
+on:
+  push:
+    branches: ['**']
+    paths: ['**.typ']
+
+jobs:
+  compile_pdf:
+    runs-on: ubuntu-latest
+
+    container:
+      image: alpine:edge
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Typst
+        run: |
+          apk add --no-cache wget tar xz
+
+          wget https://github.com/typst/typst/releases/download/v0.13.1/typst-x86_64-unknown-linux-musl.tar.xz
+          tar -xf typst-x86_64-unknown-linux-musl.tar.xz
+          mv typst-x86_64-unknown-linux-musl/typst /usr/local/bin/
+        shell: sh
+
+      - name: Compile Typst files
+        run: |
+          find . -name "*.typ" | while read file; do
+            echo "Compiling $file"
+            typst compile "$file" "${file%.typ}.pdf"
+          done
+        shell: sh
+
+      - name: Upload PDF artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-pdfs
+          path: '**/*.pdf'
+          retention-days: 7
