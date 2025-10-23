@@ -1,0 +1,29 @@
+@startwbs
+* USOS MCP Server
+ * 1. Planowanie
+  * 1.1 Analiza wymagań
+  * 1.2 Badanie USOS API
+  * 1.3 Design architektury
+ * 2. Implementacja Jądra
+  * 2.1 Setup + Infra
+  * 2.2 Serwer MCP
+  * 2.3 Klient USOS API
+  * 2.4 Autentykacja
+ * 3. Funkcje USOS
+  * 3.1 Dane studenta
+  * 3.2 Oceny i wyniki
+  * 3.3 Plan zajęć
+  * 3.4 Moduł wiadomości
+  * 3.5 Grupy zajęciowe
+  * 3.6 Zaległe płatności
+  * 3.7 Rejestracje - terminy
+  * 3.8 Kalendarz akademicki
+  * 3.9 Rankingi
+ * 4. Testy
+  * 4.1 Jednostkowe + Integracyjne
+  * 4.2 Bezpieczeństwo
+  * 4.3 Wydajność
+ * 5. Dokumentacja
+  * 5.1 Poradnik dla użytkowników
+  * 5.2 Wdrożenie
+@endwbs

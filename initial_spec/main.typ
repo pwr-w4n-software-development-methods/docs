@@ -28,3 +28,7 @@ Celem projektu jest zaprojektowanie i implementacja serwera opartego na protokol
 - #link("https://pyrefly.org", [`Pyrefly`]) - Szybki moduł sprawdzający typy i serwer języka dla języka Python z zaawansowanymi funkcjami IDE.
 
 - #link("https://about.gitlab.com/company", "Gitlab") - zintegrowana platforma metodyki łączącej tworzenie oprogramowania z operacjami, która integruje procesy i technologie, aby umożliwić ciągłe i szybkie dostarczanie wartości.
+
+
+= Work Breakdown Structure
+#image("wbs.svg")
