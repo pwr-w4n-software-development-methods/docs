@@ -3,7 +3,7 @@ name: Compile Typst Documents
 on:
   push:
     branches: ['**']
-    paths: ['**.typ']
+    paths: ['**.typ', '**.puml']
 
 jobs:
   compile_pdf:
@@ -24,6 +24,18 @@ jobs:
           tar -xf typst-x86_64-unknown-linux-musl.tar.xz
           mv typst-x86_64-unknown-linux-musl/typst /usr/local/bin/
         shell: sh
+
+      - name: Install plantuml
+        run: |
+          apk add plantuml
+        shell: sh
+
+      - name: Install puml files to svg
+        run: |
+          find . -name "*.puml" | while read file; do
+            echo "Compiling $file"
+            plantuml -tsvg "$file"
+          done
 
       - name: Compile Typst files
         run: |
