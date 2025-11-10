@@ -1,0 +1,107 @@
+@startuml AI_Agent_MCP_Infrastructure
+!define EXTERNAL_COLOR #ECEFF1
+!define OUR_COLOR #E8F5E9
+!define TEACHER_SITES_COLOR #FFF9C4
+!define EXTERNAL_SITES_COLOR #FFCCBC
+
+skinparam linetype ortho
+skinparam rectangle {
+    BackgroundColor<<external>> EXTERNAL_COLOR
+    BackgroundColor<<ours>> OUR_COLOR
+    BackgroundColor<<mcp>> #FFF3E0
+    BackgroundColor<<tool>> #F3E5F5
+    BackgroundColor<<wrapper>> #E8F5E9
+    BackgroundColor<<bridge>> #FCE4EC
+}
+
+package "External - AI Agent" <<external>> {
+    rectangle "AI Agent\n(External)" <<external>> {
+        component "AI Agent Core"
+    }
+}
+
+rectangle "Our Infrastructure" <<ours>> {
+    rectangle "MCP Server" <<mcp>> {
+        rectangle "Teacher Website MCP Tools" <<tool>> {
+            component "Website Tool 1"
+            component "Website Tool 2"
+            component "Website Tool N"
+        }
+        rectangle "USOS MCP Tools" <<tool>> {
+            component "USOS Tool 1"
+            component "USOS Tool 2"
+            component "USOS Tool N"
+        }
+    }
+
+    rectangle "Integration Layer" <<wrapper>> {
+
+        rectangle "USOS Integration" <<wrapper>> {
+            rectangle "USOS API Wrapper" {
+                component "API Wrapper Logic"
+            }
+
+            rectangle "USOS Bridge" <<bridge>> {
+                component "Web Auth Handler"
+                component "API Communication"
+            }
+        }
+        rectangle "Teacher Website Parser" <<bridge>> {
+            component "Parser Logic"
+        }
+
+    }
+}
+
+package "External - Teacher Websites" TEACHER_SITES_COLOR {
+    rectangle "Teacher Website A" TEACHER_SITES_COLOR {
+        component "Website A"
+    }
+    rectangle "Teacher Website B" TEACHER_SITES_COLOR {
+        component "Website B"
+    }
+    rectangle "Teacher Website N" TEACHER_SITES_COLOR {
+        component "Website N"
+    }
+}
+
+package "External - USOS Infrastructure" EXTERNAL_SITES_COLOR {
+    rectangle "USOS Web\n(Authentication)" <<external>> {
+        component "USOS Web Portal"
+    }
+
+    rectangle "USOS Servers" <<external>> {
+        component "USOS API"
+    }
+}
+
+"AI Agent Core" --> "Website Tool 1" : uses
+"AI Agent Core" --> "Website Tool 2" : uses
+"AI Agent Core" --> "Website Tool N" : uses
+"AI Agent Core" --> "USOS Tool 1" : uses
+"AI Agent Core" --> "USOS Tool 2" : uses
+"AI Agent Core" --> "USOS Tool N" : uses
+
+"Website Tool 1" --> "Parser Logic" : calls
+"Website Tool 2" --> "Parser Logic" : calls
+"Website Tool N" --> "Parser Logic" : calls
+
+"Parser Logic" --> "Website A" : scrapes
+"Parser Logic" --> "Website B" : scrapes
+"Parser Logic" --> "Website N" : scrapes
+
+"USOS Tool 1" --> "API Wrapper Logic" : calls
+"USOS Tool 2" --> "API Wrapper Logic" : calls
+"USOS Tool N" --> "API Wrapper Logic" : calls
+
+"API Wrapper Logic" --> "Web Auth Handler" : delegates
+
+"Web Auth Handler" --> "USOS Web Portal" : authenticates
+"USOS Web Portal" --> "Web Auth Handler" : returns credentials
+
+"Web Auth Handler" --> "API Communication" : provides auth
+
+"API Communication" --> "USOS API" : HTTP requests\n(with auth)
+"USOS API" --> "API Communication" : HTTP responses
+
+@enduml
