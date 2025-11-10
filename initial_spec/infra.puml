@@ -14,94 +14,94 @@ skinparam rectangle {
     BackgroundColor<<bridge>> #FCE4EC
 }
 
-package "External - AI Agent" <<external>> {
-    rectangle "AI Agent\n(External)" <<external>> {
-        component "AI Agent Core"
+package "Zewnętrzne - AI Agent" <<external>> {
+    rectangle "AI Agent\n(Zewnętrzny)" <<external>> {
+        component "Rdzeń AI Agent"
     }
 }
 
-rectangle "Our Infrastructure" <<ours>> {
-    rectangle "MCP Server" <<mcp>> {
-        rectangle "Teacher Website MCP Tools" <<tool>> {
-            component "Website Tool 1"
-            component "Website Tool 2"
-            component "Website Tool N"
+rectangle "Nasza Infrastruktura" <<ours>> {
+    rectangle "Serwer MCP" <<mcp>> {
+        rectangle "Narzędzia MCP Stron Prowadzących" <<tool>> {
+            component "Narzędzie Strony 1"
+            component "Narzędzie Strony 2"
+            component "Narzędzie Strony N"
         }
-        rectangle "USOS MCP Tools" <<tool>> {
-            component "USOS Tool 1"
-            component "USOS Tool 2"
-            component "USOS Tool N"
+        rectangle "Narzędzia MCP USOS" <<tool>> {
+            component "Narzędzie USOS 1"
+            component "Narzędzie USOS 2"
+            component "Narzędzie USOS N"
         }
     }
 
-    rectangle "Integration Layer" <<wrapper>> {
+    rectangle "Warstwa Integracji" <<wrapper>> {
 
-        rectangle "USOS Integration" <<wrapper>> {
-            rectangle "USOS API Wrapper" {
-                component "API Wrapper Logic"
+        rectangle "Integracja USOS" <<wrapper>> {
+            rectangle "Wrapper API USOS" {
+                component "Logika Wrappera API"
             }
 
-            rectangle "USOS Bridge" <<bridge>> {
-                component "Web Auth Handler"
-                component "API Communication"
+            rectangle "Most USOS" <<bridge>> {
+                component "Handler Uwierzytelniania Web"
+                component "Komunikacja API"
             }
         }
-        rectangle "Teacher Website Parser" <<bridge>> {
-            component "Parser Logic"
+        rectangle "Parser Stron Prowadzących" <<bridge>> {
+            component "Logika Parsera"
         }
 
     }
 }
 
-package "External - Teacher Websites" TEACHER_SITES_COLOR {
-    rectangle "Teacher Website A" TEACHER_SITES_COLOR {
-        component "Website A"
+package "Zewnętrzne - Strony Prowadzących" TEACHER_SITES_COLOR {
+    rectangle "Strona Prowadzącego A" TEACHER_SITES_COLOR {
+        component "Strona A"
     }
-    rectangle "Teacher Website B" TEACHER_SITES_COLOR {
-        component "Website B"
+    rectangle "Strona Prowadzącego B" TEACHER_SITES_COLOR {
+        component "Strona B"
     }
-    rectangle "Teacher Website N" TEACHER_SITES_COLOR {
-        component "Website N"
-    }
-}
-
-package "External - USOS Infrastructure" EXTERNAL_SITES_COLOR {
-    rectangle "USOS Web\n(Authentication)" <<external>> {
-        component "USOS Web Portal"
-    }
-
-    rectangle "USOS Servers" <<external>> {
-        component "USOS API"
+    rectangle "Strona Prowadzącego N" TEACHER_SITES_COLOR {
+        component "Strona N"
     }
 }
 
-"AI Agent Core" --> "Website Tool 1" : uses
-"AI Agent Core" --> "Website Tool 2" : uses
-"AI Agent Core" --> "Website Tool N" : uses
-"AI Agent Core" --> "USOS Tool 1" : uses
-"AI Agent Core" --> "USOS Tool 2" : uses
-"AI Agent Core" --> "USOS Tool N" : uses
+package "Zewnętrzne - Infrastruktura USOS" EXTERNAL_SITES_COLOR {
+    rectangle "Web USOS\n(Uwierzytelnianie)" <<external>> {
+        component "Portal Web USOS"
+    }
 
-"Website Tool 1" --> "Parser Logic" : calls
-"Website Tool 2" --> "Parser Logic" : calls
-"Website Tool N" --> "Parser Logic" : calls
+    rectangle "Serwery USOS" <<external>> {
+        component "API USOS"
+    }
+}
 
-"Parser Logic" --> "Website A" : scrapes
-"Parser Logic" --> "Website B" : scrapes
-"Parser Logic" --> "Website N" : scrapes
+"Rdzeń AI Agent" --> "Narzędzie Strony 1" : używa
+"Rdzeń AI Agent" --> "Narzędzie Strony 2" : używa
+"Rdzeń AI Agent" --> "Narzędzie Strony N" : używa
+"Rdzeń AI Agent" --> "Narzędzie USOS 1" : używa
+"Rdzeń AI Agent" --> "Narzędzie USOS 2" : używa
+"Rdzeń AI Agent" --> "Narzędzie USOS N" : używa
 
-"USOS Tool 1" --> "API Wrapper Logic" : calls
-"USOS Tool 2" --> "API Wrapper Logic" : calls
-"USOS Tool N" --> "API Wrapper Logic" : calls
+"Narzędzie Strony 1" --> "Logika Parsera" : wywołuje
+"Narzędzie Strony 2" --> "Logika Parsera" : wywołuje
+"Narzędzie Strony N" --> "Logika Parsera" : wywołuje
 
-"API Wrapper Logic" --> "Web Auth Handler" : delegates
+"Logika Parsera" --> "Strona A" : scrapuje
+"Logika Parsera" --> "Strona B" : scrapuje
+"Logika Parsera" --> "Strona N" : scrapuje
 
-"Web Auth Handler" --> "USOS Web Portal" : authenticates
-"USOS Web Portal" --> "Web Auth Handler" : returns credentials
+"Narzędzie USOS 1" --> "Logika Wrappera API" : wywołuje
+"Narzędzie USOS 2" --> "Logika Wrappera API" : wywołuje
+"Narzędzie USOS N" --> "Logika Wrappera API" : wywołuje
 
-"Web Auth Handler" --> "API Communication" : provides auth
+"Logika Wrappera API" --> "Handler Uwierzytelniania Web" : deleguje
 
-"API Communication" --> "USOS API" : HTTP requests\n(with auth)
-"USOS API" --> "API Communication" : HTTP responses
+"Handler Uwierzytelniania Web" --> "Portal Web USOS" : uwierzytelnia
+"Portal Web USOS" --> "Handler Uwierzytelniania Web" : zwraca poświadczenia
+
+"Handler Uwierzytelniania Web" --> "Komunikacja API" : dostarcza uwierzytelnianie
+
+"Komunikacja API" --> "API USOS" : HTTP żądania\n(z uwierzytelnianiem)
+"API USOS" --> "Komunikacja API" : HTTP odpowiedzi
 
 @enduml
