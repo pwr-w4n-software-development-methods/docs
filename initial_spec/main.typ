@@ -47,3 +47,7 @@ Celem projektu jest zaprojektowanie i implementacja serwera opartego na protokol
 - Przygotowanie integracji z różnymi narzędziami AI, w tym agentów CLI (Interfejsu wiersza poleceń). - 1 tydzień
 
 - Dokumentacja. - 1 tydzień
+
+= Diagram infrastruktury
+
+#image("infra.svg")

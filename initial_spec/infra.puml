@@ -1,4 +1,4 @@
-@startuml AI_Agent_MCP_Infrastructure
+@startuml
 !define EXTERNAL_COLOR #ECEFF1
 !define OUR_COLOR #E8F5E9
 !define TEACHER_SITES_COLOR #FFF9C4
