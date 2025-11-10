@@ -51,3 +51,65 @@ Celem projektu jest zaprojektowanie i implementacja serwera opartego na protokol
 = Diagram infrastruktury
 
 #image("infra.svg")
+
+= Ryzyka projektowe
+== Zmiany USOS API
+
+=== Problem
+
+- USOS może zmienić/deprecate endpointy API bez ostrzeżenia
+- usos-bridge (biblioteka komunikacji) będzie zepsuty
+- Adapter USOS będzie wymagać refaktoryzacji
+- Agenci AI nie będą mogli pobierać danych
+- Serwer zwróci błędy 404/500 zamiast danych
+
+=== Mitygacja
+
+- Testy contract dla każdego USOS endpointa
+- Versioning API - przechowywanie historii zmian
+- Health checks na uruchamianie (czy USOS żyje?)
+- Komunikacja z zespołem USOS o nadchodzących zmianach
+- CI/CD pipeline z automatycznym alertem przy zmianie API response
+
+== Niedoestymacja czasu na naukę USOS API
+
+=== Problem
+
+- 3 tygodnie to mało dla 4 osób by opanować całe USOS API
+- Dokumentacja USOS może być słaba lub nieaktualna
+- Każda osoba ma inny tempo uczenia się
+- Równoległa praca na innych taskach (usos-bridge, MCP core) = brak czasu
+- Zagrożenie: złe implementacje adaptera, security holes z braku wiedzy
+
+=== Mitygacja
+
+- Tydzień 0 Spike/POC - 1-2 dni każda osoba testuje USOS API
+- Parallel learning - nie czekać na każdego
+- Knowledge sharing sesje 2x/tydzień (30 min, rotate prezentujący)
+
+== Halucynacje w AI
+
+=== Problem
+
+- Agent zwraca "Twoja średnia ocen to 4.5" zamiast nie mam dostępu
+- Student ufa błędnej informacji
+- Agenci mogą zmyślić dane bez wytłumaczenia źródła
+
+=== Mitygacja
+
+- Source attribution - agent zawsze mówi to pochodzi z USOS
+- Explainability - dlaczego agent to powiedział?
+
+== Zmiany w Protokole MCP
+
+=== Problem
+
+- MCP evolucjonuje (nowe wersje, zmiany w SDK)
+- Kompatybilność wstecz nie gwarantowana
+- Potrzebna refaktoryzacja kodu serwera
+- Agenci AI (ChatGPT, Claude) używają różnych wersji MCP - problemy integracji
+
+=== Mitygacja
+
+- Przypiąć MCP SDK do konkretnej wersji w requirements.txt
+- Testy integracji z popularnymi agentami AI (Claude, Gemini CLI)
