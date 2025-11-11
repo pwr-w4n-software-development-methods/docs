@@ -113,3 +113,35 @@ Celem projektu jest zaprojektowanie i implementacja serwera opartego na protokol
 
 - Przypiąć MCP SDK do konkretnej wersji w requirements.txt
 - Testy integracji z popularnymi agentami AI (Claude, Gemini CLI)
+
+== Iteracja 1 (Tygodnie 1-3): Fundamenty i Równoległy Development
+
+*Główny cel:* Stworzenie działającej biblioteki `usos-bridge` oraz równoległe rozpoczęcie implementacji serwera MCP. Nauka API musi odbywać się "w locie" podczas implementacji.
+
+- *Zadania implementacyjne:*
+
+  + *Team A (2 osoby): Implementacja `usos-bridge` + `Adapter (Core)`*
+    - *Tydzień 1:* Implementacja `usos-bridge`. Musi być gotowy i przetestowany (autoryzacja OAuth i podstawowe metody GET/POST) do końca pierwszego tygodnia. To jest krytyczny bloker.
+    - *Tydzień 1-2:* Równolegle z T1: "Zapoznanie się z USOS API" (Spike/POC). Identyfikacja 5-10 kluczowych endpointów (logowanie, dane studenta, oceny, plan zajęć).
+    - *Tydzień 2-3:* Natychmiastowe rozpoczęcie Implementacji adaptera API USOS. Definicja modeli Pydantic dla tych 5-10 endpointów. Implementacja logiki adaptera dla tych funkcji.
+
+  + *Team B (2 osoby): Implementacja `Serwera MCP`*
+    - *Tydzień 1:* Setup projektu (repo, `uv`, `Ruff`, CI).
+    - *Tydzień 1-2:* Równoległa analiza USOS API (współpraca z Team A nad identyfikacją endpointów).
+    - *Tydzień 2-3:* Implementacja Rdzennej struktury serwera MCP. Użycie SDK do stworzenia serwera. Zdefiniowanie narzędzi (zdolności, np. `get_grades`, `get_schedule`), które będą na razie zwracać mockowe dane lub czekać na gotowe funkcje z adaptera.
+
+- *Cel na koniec iteracji:* Działający `usos-bridge`, zdefiniowane modele Pydantic dla kluczowych danych, częściowo działający adapter i szkielet serwera MCP.
+
+== Iteracja 2 (Tygodnie 4-6): Pełna Integracja, Testy i Finalizacja
+
+*Główny cel:* Połączenie wszystkich komponentów (MCP <-> Adapter <-> Bridge) w działającą całość, stworzenie agenta demonstracyjnego i zamknięcie projektu.
+
+- *Zadania implementacyjne (praca równoległa/połączona):*
+
+  - *Team A + Team B (Wszyscy)*
+    - *Tydzień 4-5:* Intensywna praca nad podłączeniem. Metody z adaptera (Team A) są podpinane pod "capabilities" serwera MCP (Team B). To jest główny wysiłek tej iteracji.
+    - *Tydzień 4-5:* Rozszerzenie adaptera o dodatkowe endpointy, jeśli czas pozwoli. Implementacja obsługi błędów z USOS API.
+    - *Tydzień 6:* Intensywne testy E2E (Agent CLI -> Serwer MCP -> Adapter -> `usos-bridge` -> (Mock lub Live) USOS).
+    - *Tydzień 6:* `Dokumentacja`. Szybkie spisanie README, dokumentacji endpointów serwera i instrukcji uruchomienia. Przegląd kodu, merge i zamknięcie projektu.
+
+- *Cel na koniec iteracji:* Działający, zintegrowany serwer MCP zdolny do obsługi podstawowych zapytań o dane z USOS przez agenta CLI. Projekt "Done".
